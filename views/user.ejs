@@ -1,0 +1,18 @@
+<h2>User Information:</h2>
+<p>
+    <img src="<%= avatarUrl %>" alt="Avatar" style="max-width: 200px;"><br>
+    <strong>Username:</strong> <%= username %> <br>
+    <strong>Account Creation Date:</strong> <%= creationDate %> <br>
+    <strong>About Me:</strong> <%= aboutMe %>
+</p>
+
+<% if (commonGuilds !== -1) { %>
+    <h2>Common servers:</h2>
+    <ul>
+        <% commonGuilds.forEach((guild) => { %>
+            <li><%= guild.guildName %> - <%= guild.nickname %></li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p>No common servers found.</p>
+<% } %>

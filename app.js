@@ -6,7 +6,6 @@ const client = new DiscordClient();
 
 (async () => {
     await client.login();
-    await client.initialize();
 })();
 
 

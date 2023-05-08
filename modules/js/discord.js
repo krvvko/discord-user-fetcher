@@ -1,5 +1,5 @@
 const Discord = require('discord.js-selfbot-v13');
-const config = require('../config.json');
+const config = require('../../config.json');
 
 class DiscordClient {
     constructor() {

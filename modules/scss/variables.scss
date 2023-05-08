@@ -1,0 +1,31 @@
+$def-font: 'Source Sans Pro', sans-serif;
+
+$accent-1: rgba(72, 81, 104, 255);
+$accent-2: rgba(43, 47, 61, 255);
+$accent-3: rgba(29, 33, 42, 255);
+$accent-4: rgba(20, 16, 21, 255);
+$accent-4-t: rgba(20, 16, 21, 0.6);
+
+$gradient-1: $accent-1, $accent-3;
+$gradient-2: $accent-2, $accent-4;
+
+$headline-color-white: rgb(221, 221, 239);
+$headline-color-white-hover: rgba(221, 221, 239, 0.92);
+$headline-color-black: rgb(23, 23, 24);
+$headline-color-black-hover: rgba(29, 29, 31, 0.92);
+
+$text-color-1: rgb(221, 221, 239);
+$text-color-2: rgb(184, 184, 203);
+$text-color-3: rgb(146, 146, 171);
+
+$border-radius: 6px;
+$step: 2;
+
+$blue: #4f4fff;
+$blue-hover: #3d3dc5;
+
+$grey: #7f7f96;
+$grey-hover: #6b6b7c;
+
+$green: #51ff7a;
+$green-hover: #3dc55d;

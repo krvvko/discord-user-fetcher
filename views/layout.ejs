@@ -2,11 +2,20 @@
 <html>
 <head>
     <title><%= pageTitle %></title>
-    <link rel="stylesheet" href="/public/styles.css">
+    <link rel="stylesheet" href="/public/normalizer.css">
+    <link rel="stylesheet" href="/public/style.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    header
+<header class="header">
+    <div class="h-left">
+        <div class="h-logo"></div>
+    </div>
+    <div class="h-right">
+        <a href="" class="h-link">Try It</a>
+        <a href="" class="h-link">About</a>
+        <button class="h-btn">Source</button>
+    </div>
 </header>
 
 <main>
@@ -17,4 +26,7 @@
     footer
 </footer>
 </body>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="public/js/init.js"></script>
+<script src="public/js/script.js"></script>
 </html>

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const DiscordClient = require('./components/discord.js');
+const DiscordClient = require('./modules/js/discord.js');
 const app = express();
 const client = new DiscordClient();
 
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user', async (req, res) => {
-    const userId = req.query['user-id'];
+    const userId = req.query['uid'];
 
     if (!userId) {
         res.render('layout.ejs', {

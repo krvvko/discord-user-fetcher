@@ -7,38 +7,28 @@ class DiscordClient {
             checkUpdate: false
         });
         this.token = config.discordToken;
-        this.login();
     }
 
     async login() {
-        await this.client.login(this.token);
-        // await this.fetchAllGuildMembersWithRetry();
-    }
-
-    async fetchAllGuildMembersWithRetry(retries = 3, delay = 5000) {
-        for (let i = 0; i < retries; i++) {
-            try {
-                this.guildsMembers = await Promise.all(
-                    this.client.guilds.cache.map(guild => guild.members.fetch())
-                );
-                console.log('Successfully fetched guild members.');
-                return;
-            } catch (error) {
-                if (error.code === 'GUILD_MEMBERS_TIMEOUT') {
-                    console.warn(`Attempt ${i + 1}: Failed to fetch guild members. Retrying in ${delay}ms...`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                } else {
-                    console.error('An unexpected error occurred while fetching guild members:', error);
-                    break;
-                }
-            }
-        }
-    }
-
-    async initialize() {
         return new Promise(async (resolve) => {
             this.client.on('ready', async () => {
                 console.log(`Logged in as ${this.client.user.tag}`);
+                // Set the status to online
+                await this.client.user.setStatus('online');
+                let r = new Discord.RichPresence()
+                    .setApplicationId('817229550684471297')
+                    .setName('Discord User Fetcher')
+                    .setType('PLAYING')
+                    .setState('meow')
+                    .setName('Name')
+                    .setDetails('Fetching user data')
+                    .setStartTimestamp(Date.now())
+                    .setAssetsLargeImage('mp:attachments/1086422556258615406/1105135324251828304/b9f696010b6d410e936cd59f75e23507.png')
+                    .setAssetsLargeText('Fetching...')
+                    .addButton('Official WebSite', 'https://link.com/')
+                    .addButton('GitHub', 'https://link.com/')
+                this.client.user.setActivity(r);
+
                 this.guildsMembers = new Map();
                 await Promise.all(
                     this.client.guilds.cache.map(async (guild) => {
@@ -50,29 +40,11 @@ class DiscordClient {
                         }
                     })
                 );
+
                 resolve();
             });
+            await this.client.login(this.token);
         });
-    }
-
-    async getUserStatus(userId) {
-        try {
-            const targetUser = await this.client.users.fetch(userId);
-            if (!targetUser) {
-                return null;
-            }
-            console.log(targetUser)
-            const targetUserPresence = targetUser.presence;
-
-            if (targetUserPresence && targetUserPresence.status) {
-                return targetUserPresence.status;
-            } else {
-                return "offline";
-            }
-        } catch (err) {
-            console.error(err);
-            return null;
-        }
     }
 
     async getAccountCreationDate(userId) {

@@ -17,10 +17,9 @@ class DiscordClient {
                 await this.client.user.setStatus('online');
                 let r = new Discord.RichPresence()
                     .setApplicationId('817229550684471297')
-                    .setName('Discord User Fetcher')
                     .setType('PLAYING')
-                    .setState('meow')
-                    .setName('Name')
+                    .setState('Server is up for:')
+                    .setName('Discord Member Fetcher')
                     .setDetails('Fetching user data')
                     .setStartTimestamp(Date.now())
                     .setAssetsLargeImage('mp:attachments/1086422556258615406/1105135324251828304/b9f696010b6d410e936cd59f75e23507.png')
@@ -49,7 +48,7 @@ class DiscordClient {
 
     async getAccountCreationDate(userId) {
         try {
-            const targetUser = this.client.users.cache.get(userId);
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
             if (!targetUser) {
                 return null;
             }
@@ -62,7 +61,7 @@ class DiscordClient {
 
     async getUsername(userId) {
         try {
-            const targetUser = this.client.users.cache.get(userId);
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
             if (!targetUser) {
                 return null;
             }
@@ -75,7 +74,7 @@ class DiscordClient {
 
     async getAboutMe(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
             if (!targetUser) {
                 return null;
             }
@@ -86,6 +85,7 @@ class DiscordClient {
         }
     }
 
+
     async getUserAvatar(userId) {
         try {
             const targetUser = await this.client.users.fetch(userId, {cache: false});
@@ -94,6 +94,19 @@ class DiscordClient {
             }
 
             return targetUser.displayAvatarURL({format: 'png', dynamic: true, size: 2048});
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+    async isUserBot(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+
+            return targetUser.bot;
         } catch (err) {
             console.error(err);
             return null;
@@ -129,6 +142,77 @@ class DiscordClient {
             return -1;
         }
     }
+
+    async getUserBanner(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+
+            const bannerURL = targetUser.bannerURL({ format: 'png', size: 2048 });
+            return bannerURL;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+
+    async getUserAccentColor(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+            console.log(targetUser)
+            return targetUser.hexThemeColor;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+
+    async getUserBadges(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+
+            const badges = targetUser.badges;
+            return badges;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+
+    async getNitroStatus(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+            return targetUser.nitroType;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+
+    async getNitroSince(userId) {
+        try {
+            const targetUser = await this.client.users.fetch(userId, {cache: false});
+            if (!targetUser) {
+                return null;
+            }
+            return targetUser.premiumSince;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+
 }
 
 module.exports = DiscordClient;

@@ -39,18 +39,26 @@ app.get('/user', async (req, res) => {
     }
 
     try {
-        const commonGuilds = await client.findCommonGuilds(userId);
-        const username = await client.getUsername(userId);
-        const creationDate = await client.getAccountCreationDate(userId);
-        const aboutMe = await client.getAboutMe(userId);
-        const avatarUrl = await client.getUserAvatar(userId);
+        const nitroSinceTimestamp = await client.getNitroSince(userId);
+        const nitroSince = nitroSinceTimestamp ? new Date(nitroSinceTimestamp).toLocaleDateString() : null;
+
+        const userData = {
+            commonGuilds: await client.findCommonGuilds(userId),
+            userId: userId,
+            username: await client.getUsername(userId),
+            creationDate: await client.getAccountCreationDate(userId),
+            aboutMe: await client.getAboutMe(userId),
+            avatarUrl: await client.getUserAvatar(userId),
+            accentColor: await client.getUserAccentColor(userId),
+            bannerUrl: await client.getUserBanner(userId),
+            badges: await client.getUserBadges(userId),
+            isUserBot: await client.isUserBot(userId),
+            nitroStatus: await client.getNitroStatus(userId),
+            nitroSince: nitroSince
+        };
 
         res.render('layout.ejs', {
-            commonGuilds: commonGuilds,
-            username: username,
-            creationDate: creationDate,
-            aboutMe: aboutMe,
-            avatarUrl: avatarUrl,
+            ...userData,
             pageTitle: `DWP - User ${userId}`,
             body: `user`
         });
@@ -63,7 +71,6 @@ app.get('/user', async (req, res) => {
         });
     }
 });
-
 app.listen(3000, () => {
     console.log('Server started on http://localhost:3000}');
 });

@@ -1,4 +1,8 @@
 @import "variables.scss";
+@font-face {
+  font-family: defaultFont;
+  src: url('fonts/HWNuckle.otf') format('otf');
+}
 
 @mixin blue-hover {
   background: $blue;
@@ -32,10 +36,23 @@
   border: none;
   outline: none;
   transition: background 0.2s;
-  padding: 6px 20px;
   font-family: $def-font;
   font-weight: bold;
-  font-size: 18px;
+}
+
+@mixin headlineHuge {
+  color: $headline-color-white;
+  font-size: 52px;
+  font-weight: bold;
+}
+@mixin section-btn {
+  padding: 10px 22px;
+  font-size: 16px;
+}
+@mixin sectionParagraph {
+  color: $text-color-2;
+  font-size: 16px;
+  line-height: 30px;
 }
 
 button {
@@ -61,4 +78,33 @@ a {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to top, $gradient-2);}
+  background: linear-gradient(to top, $gradient-2);
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@keyframes fadeInC {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(5px, 5px) rotate(5deg); }
+  50% { transform: translate(0, 0) rotate(0deg); }
+  75% { transform: translate(-5px, 5px) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}

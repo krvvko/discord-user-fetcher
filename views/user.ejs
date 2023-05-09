@@ -1,10 +1,33 @@
 <h2>User Information:</h2>
-<p>
-    <img src="<%= avatarUrl %>" alt="Avatar" style="max-width: 200px;"><br>
-    <strong>Username:</strong> <%= username %> <br>
-    <strong>Account Creation Date:</strong> <%= creationDate %> <br>
-    <strong>About Me:</strong> <%= aboutMe %>
-</p>
+<img src="<%= avatarUrl %>" alt="Avatar" style="max-width: 200px;"><br>
+<img src="<%= bannerUrl %>" alt="Banner" style="max-width: 2048px;"><br>
+
+
+<strong>Username:</strong> <%= username %> <br>
+<strong>Account Creation Date:</strong> <%= creationDate %> <br>
+<strong>Bot:</strong> <%= isUserBot ? 'Yes' : 'No' %>
+<p>About Me: <%= aboutMe %></p>
+<p>Accent Colors: <%= accentColor %></p>
+
+<h2>Badges:</h2>
+<ul>
+    <% if (badges) { %>
+        <% badges.forEach(function(badge) { %>
+            <li>
+                <img src="<%= badge.iconURL() %>" alt="<%= badge.description %>">
+                <%= badge.description %>
+            </li>
+        <% }) %>
+    <% } else { %>
+        <li>No badges found.</li>
+    <% } %>
+</ul>
+
+
+<p>Nitro status: <%= nitroStatus %></p>
+<p>Nitro since: <%= nitroSince %></p>
+
+<p>User ID: <%= userId %></p>
 
 <% if (commonGuilds !== -1) { %>
     <h2>Common servers:</h2>

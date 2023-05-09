@@ -9,13 +9,15 @@ html {
 }
 
 body {
-  min-height: 200vh;
+  min-height: 120vh;
+  overflow-x: hidden;
   background: linear-gradient(to top, $gradient-2);
 }
 
 .submit-btn {
   @include def-btn;
-  @include green-hover;
+  @include section-btn;
+  @include blue-hover;
 }
 
 header {
@@ -28,7 +30,7 @@ header {
   padding: $step*18px $step*12px;
   transition: 0.2s;
   box-sizing: border-box;
-
+  z-index: 2;
   .h-right {
     display: flex;
     flex-direction: row;
@@ -40,6 +42,8 @@ header {
     overflow: hidden;
     position: relative;
     transition: color 0.2s;
+    padding: 6px 20px;
+    font-size: 18px;
   }
 
   .h-btn::before {
@@ -69,6 +73,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 6px 10px;
+    font-size: 18px;
   }
 
   .h-link::before {
@@ -96,17 +102,226 @@ header.isSticky {
 
 main {
   display: flex;
-  padding-top: 109px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .section {
   width: 100%;
-  height: 100vh;
   display: flex;
 }
 
 .section-ui {
   justify-content: center;
   align-items: center;
-  margin-top: -218px;
+  position: relative;
+  flex-direction: column;
+  height: calc(100vh - 109px);
+}
+.section-ui-anim-bg {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  z-index: -1;
+  position: absolute;
+  pointer-events: none;
+  margin-top: -109px;
+}
+.intro-top {
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+  flex: 1;
+  max-width: 80vw;
+  align-items: center;
+  justify-content: center;
+}
+.intro-bottom {
+  height: 100px;
+  width: 100%;
+  background: $discord-ui-accent2;
+}
+
+.ui-discord {
+  background: $discord-ui-accent2;
+  border-radius: $border-radius;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border: 1px solid $discord-ui-accent1;
+  box-shadow: 0 0 9px 3px $accent-4-t;
+  max-height: 60vh;
+  min-height: 40vh;
+  min-width: 700px;
+}
+
+
+.bg-video {
+  position: absolute;
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.ui-discord-left {
+  display: flex;
+  flex-direction: column;
+  background: $discord-ui-accent3;
+  position: relative;
+  .ui-buttons {
+    display: flex;
+    padding: 10px 10px 0 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    div {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+    }
+    div:nth-child(1) {
+      background: $mac-ui-red;
+    }
+    div:nth-child(2) {
+      background: $mac-ui-yellow;
+    }
+    div:nth-child(3) {
+      background: $mac-ui-green;
+    }
+  }
+
+  .ui-logo {
+    padding: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .ui-nav-element-active {
+      display: flex;
+      height: 42px;
+      width: 42px;
+      position: relative;
+      align-items: center;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 30%;
+      }
+    }
+
+    .ui-nav-element-active::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      width: 8px;
+      height: 42px;
+      border-radius: 4px;
+      background: $text-color-1;
+    }
+  }
+
+  .ui-logo::before {
+    content: '';
+    background: $discord-ui-accent1;
+    position: absolute;
+    bottom: -1px;
+    height: 2px;
+    width: 60%;
+    border-radius: 1px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 10px;
+
+    .ui-nav-element {
+      height: 42px;
+      width: 42px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.ui-discord-left::after {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  right: 5px;
+  content: 'Meow';
+  font-size: 14px;
+  text-align: center;
+  background: $mac-ui-red;
+  color: $headline-color-white;
+  border-radius: 99px;
+  padding: 2px;
+}
+
+.ui-discord-right {
+  position: relative;
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  .ui-discord-right-top {
+    padding: 10px 16px;
+    border-bottom: 1px solid $discord-ui-accent3;
+    background: $discord-ui-accent2;
+    font-weight: bold;
+    color: $headline-color-white;
+  }
+  .ui-discord-right-content {
+    flex: 1;
+  }
+}
+
+.section-headline {
+  @include headlineHuge;
+  margin: 0;
+}
+
+.user-id-input {
+  @include def-btn;
+  @include section-btn;
+  cursor: text;
+  flex: 1;
+  background: $discord-ui-accent3;
+  border: 2px solid;
+  transition: 0.2s;
+  border-color: $discord-ui-accent2;
+  font-size: 16px;
+  &:focus {
+    border-color: $discord-ui-blue;
+  }
+  &:hover {
+    border-color: $discord-ui-accent1;
+  }
+  &:focus:hover {
+    border-color: $discord-ui-blue;
+  }
+}
+.uid-input-container {
+  display: flex;
+  gap: 12px;
+}
+.intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 30vw;
+}
+.section-description {
+  @include sectionParagraph;
+  a {
+    color: $blue;
+    transition-duration: 0.2s;
+    &:hover {
+      color: $blue-hover;
+    }
+  }
 }

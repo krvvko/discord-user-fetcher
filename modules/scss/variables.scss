@@ -1,4 +1,4 @@
-$def-font: 'Source Sans Pro', sans-serif;
+$def-font: 'defaultFont', sans-serif;
 
 $accent-1: rgba(72, 81, 104, 255);
 $accent-2: rgba(43, 47, 61, 255);
@@ -21,11 +21,22 @@ $text-color-3: rgb(146, 146, 171);
 $border-radius: 6px;
 $step: 2;
 
-$blue: #4f4fff;
-$blue-hover: #3d3dc5;
+$blue: #7289da;
+$blue-hover: #6174b9;
 
 $grey: #7f7f96;
 $grey-hover: #6b6b7c;
 
 $green: #51ff7a;
 $green-hover: #3dc55d;
+
+$discord-ui-accent1: #424549;
+$discord-ui-accent2: #36393e;
+$discord-ui-accent3: #282b30;
+$discord-ui-accent4: #1e2124;
+
+$discord-ui-blue: #7289da;
+
+$mac-ui-red: #ff5858;
+$mac-ui-yellow: #ffb158;
+$mac-ui-green: #6eff58;

@@ -9,7 +9,6 @@ html {
 }
 
 body {
-  min-height: 120vh;
   overflow-x: hidden;
   background: linear-gradient(to top, $gradient-2);
 }
@@ -36,7 +35,12 @@ header {
     flex-direction: row;
     gap: $step*8px;
   }
-
+  .h-left {
+    height: 36px;
+  }
+  .h-logo {
+    height: 100%;
+  }
   .h-btn {
     border: 2px solid $headline-color-white;
     overflow: hidden;
@@ -48,11 +52,11 @@ header {
 
   .h-btn::before {
     content: '';
-    top: -100px;
-    bottom: -100px;
+    top: -120px;
+    bottom: -120px;
     left: 0;
     right: 0;
-    transform: rotate(-45deg) translateX(-90px);
+    transform: rotate(-45deg) translateX(-105px);
     background: $headline-color-white;
     position: absolute;
     transition: 0.2s;
@@ -119,40 +123,111 @@ main {
   height: calc(100vh - 109px);
 }
 .section-ui-anim-bg {
-  height: 100vh;
+  height: 800px;
   width: 100%;
   overflow: hidden;
   z-index: -1;
   position: absolute;
   pointer-events: none;
   margin-top: -109px;
+  svg {
+    height: 100%;
+    width: 100%;
+  }
 }
 .intro-top {
   display: flex;
   flex-direction: row;
   gap: 10%;
   flex: 1;
-  max-width: 80vw;
+  width: 80vw;
   align-items: center;
   justify-content: center;
+  > * {
+    flex: 50%;
+  }
 }
-.intro-bottom {
-  height: 100px;
-  width: 100%;
+
+.ui-msgs {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  pointer-events: none;
+  .ui-msg:nth-child(1) {
+    z-index: -1;
+    animation: msg1 8s ease-in-out infinite;
+  }
+  .ui-msg:nth-child(2) {
+    animation: msg2 10s ease-in-out infinite;
+  }
+}
+.ui-msg {
+  padding: 8px 12px;
+  border-radius: $border-radius;
   background: $discord-ui-accent2;
+  border: 1px solid $discord-ui-accent1;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  max-width: 230px;
+  gap: 12px;
+}
+.ui-msg-left {
+  border-radius: 50%;
+  height: 42px;
+  width: 42px;
+  object-fit: cover;
+}
+.ui-msg-top {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  span:nth-child(1) {
+    color: $blue;
+    font-size: 18px;
+  }
+  span:nth-child(2) {
+    color: $text-color-3;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}
+.ui-msg-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ui-msg-bottom {
+  color: $text-color-1;
+}
+
+.intro-bottom {
+  height: 140px;
+  width: 100%;
+  color: $accent-1;
+  svg {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .ui-discord {
-  background: $discord-ui-accent2;
+  background: rgba(54, 57, 62, 0.16);
+  backdrop-filter: blur(4px);
   border-radius: $border-radius;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
-  border: 1px solid $discord-ui-accent1;
   box-shadow: 0 0 9px 3px $accent-4-t;
-  max-height: 60vh;
-  min-height: 40vh;
-  min-width: 700px;
+  position: relative;
+  height: 420px;
+  max-width: 40vw;
 }
 
 
@@ -166,8 +241,14 @@ main {
 .ui-discord-left {
   display: flex;
   flex-direction: column;
-  background: $discord-ui-accent3;
+  background: $discord-ui-accent4;
   position: relative;
+  min-width: 62px;
+  overflow: hidden;
+  border-radius: $border-radius 0 0 $border-radius;
+  border-left: 1px solid $discord-ui-accent1;
+  border-top: 1px solid $discord-ui-accent1;
+  border-bottom: 1px solid $discord-ui-accent1;
   .ui-buttons {
     display: flex;
     padding: 10px 10px 0 10px;
@@ -221,7 +302,7 @@ main {
 
   .ui-logo::before {
     content: '';
-    background: $discord-ui-accent1;
+    background: $discord-ui-accent2;
     position: absolute;
     bottom: -1px;
     height: 2px;
@@ -238,10 +319,37 @@ main {
     .ui-nav-element {
       height: 42px;
       width: 42px;
-      border-radius: 50%;
-      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position:  relative;
 
+      &::before {
+        content: '';
+        position: absolute;
+        left: -14px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: $text-color-1;
+        z-index: 2;
+        transition: height 0.2s ease-in-out;
+      }
+      &:hover::before {
+        content: '';
+        position: absolute;
+        left: -14px;
+        width: 8px;
+        height: 20px;
+        border-radius: 4px;
+        background: $text-color-1;
+      }
+      &:hover > img {
+        border-radius: 30%;
+      }
       img {
+        transition-duration: 0.2s;
+        border-radius: 50%;
         width: 100%;
         height: 100%;
       }
@@ -270,13 +378,22 @@ main {
   flex-direction: column;
   .ui-discord-right-top {
     padding: 10px 16px;
-    border-bottom: 1px solid $discord-ui-accent3;
-    background: $discord-ui-accent2;
+    border-top: 1px solid $discord-ui-accent1;
+    border-right: 1px solid $discord-ui-accent1;
+    border-bottom: 1px solid $discord-ui-accent4;
+    border-radius: 0 $border-radius 0 0;
+    background: $discord-ui-accent3;
     font-weight: bold;
     color: $headline-color-white;
   }
   .ui-discord-right-content {
     flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 1px solid $discord-ui-accent1;
+    border-bottom: 1px solid $discord-ui-accent1;
+    border-radius: 0 0 $border-radius 0;
   }
 }
 
@@ -284,7 +401,6 @@ main {
   @include headlineHuge;
   margin: 0;
 }
-
 .user-id-input {
   @include def-btn;
   @include section-btn;
@@ -325,3 +441,243 @@ main {
     }
   }
 }
+.h-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+.ui-discord-inside-element {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  background: $discord-ui-accent3;
+  border-radius: $border-radius;
+}
+.ui-discord-custom-border {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, var(--color1), var(--color2));
+  width: 65%;
+  border-radius: $border-radius;
+}
+.udie-top {
+  background: var(--bg);
+  background-size: cover;
+  min-height: 90px;
+  max-height: 90px;
+  position: relative;
+}
+
+.banner-bg {
+  min-height: 90px;
+  max-height: 90px;
+  position: absolute;
+  z-index: 1;
+}
+
+.pfp-wrapper {
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  background: inherit;
+
+}
+
+.udie-pfp {
+  position: absolute;
+  height: 64px;
+  width: 64px;
+  bottom: 0;
+  transform: translateY(50%);
+  border-radius: 50%;
+  margin-left: 14px;
+  box-shadow: 0 0 0 6px $discord-ui-accent3;
+}
+.udie-badges {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: flex-end;
+  background: $discord-ui-accent4;
+  padding: 4px;
+  margin: 10px 14px;
+  align-self: flex-end;
+  border-radius: $border-radius;
+  .udie-badge {
+    width: 18px;
+    height: 18px;
+  }
+}
+.udie-info {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px 10px 10px;
+  background: $discord-ui-accent4;
+  padding: 10px 10px 0 10px;
+  border-radius: $border-radius;
+}
+.udie-username {
+  font-size: 18px;
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid $discord-ui-accent3;
+}
+.udie-block {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  gap: 2px;
+  span:nth-child(1) {
+    color: $headline-color-white;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  span:nth-child(2) {
+    color: $text-color-2;
+    font-size: 12px;
+  }
+}
+.section-explanation {
+  background: linear-gradient($accent-1, $accent-2);
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+.section-explanation::before {
+  height: 40px;
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: -40px;
+  background: linear-gradient(to top, $accent-1, transparent);
+}
+.ui-discord-tags {
+  display: flex;
+  flex-direction: column;
+  background: $discord-ui-accent3;
+  height: 100%;
+  width: 154px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.ui-tags-top {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.ui-discord-inside-element-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+.ui-tags-list {
+  padding-top: 15px;
+  border-top: 2px solid $discord-ui-accent2;
+  span {
+    display: block;
+    margin-bottom: 4px;
+  }
+  ul {
+    color: $text-color-2;
+    font-size: 14px;
+    margin-top: 0;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+.discord-ui-game {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  div:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 6px;
+    img {
+      border-radius: $border-radius;
+      height: 64px;
+      width: 64px;
+      object-fit: cover;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      span {
+        color: $headline-color-white;
+        font-size: 14px;
+      }
+      span:nth-child(1) {}
+      span:nth-child(2) {}
+      span:nth-child(3) {}
+      span:nth-child(4) {}
+    }
+  }
+  div:nth-child(2) {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    button {
+      padding: 10px;
+      font-size: 14px;
+      border-radius: $border-radius;
+      background: #707f8e;
+      cursor: default;
+    }
+  }
+}
+.home-section-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60vw;
+  margin: 0 auto;
+  gap: 50px;
+  align-items: center;
+}
+.section-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .submit-btn {
+    align-self: flex-start;
+  }
+}
+.shadow {
+  box-shadow: 0 0 12px 1px $headline-color-black-hover;
+}
+.section-img {
+  max-width: 50%;
+  border-radius: $border-radius;
+}
+.section-headline2 {
+  text-align: center;
+}
+.section-footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: $accent-1;
+  align-self: center;
+  padding: 0 30px 20px 30px;
+  border-radius: $border-radius;
+  margin-bottom: 30px;
+}
+@import "adaptive.scss";

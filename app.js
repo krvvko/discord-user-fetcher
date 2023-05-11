@@ -19,8 +19,29 @@ app.use('/public', express.static(path.join(__dirname, 'public'), {
     }
 }));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const userList = [
+        "789792247830675526", // Пашочек
+        "231795547210514434", // етернал))
+        "266903140354228224", // максим
+    ]
+    const userId = userList[Math.random() * userList.length | 0];
+    console.log(userId)
+    const nitroSinceTimestamp = await client.getNitroSince(userId);
+    const nitroSince = nitroSinceTimestamp ? new Date(nitroSinceTimestamp).toLocaleDateString() : null;
+    const userData = {
+        username: await client.getUsername(userId),
+        creationDate: await client.getAccountCreationDate(userId),
+        aboutMe: await client.getAboutMe(userId),
+        avatarUrl: await client.getUserAvatar(userId),
+        accentColor: await client.getUserAccentColor(userId) ? await client.getUserAccentColor(userId) : ["#1e2124", "#1e2124"],
+        bannerUrl: await client.getUserBanner(userId),
+        badges: await client.getUserBadges(userId),
+        nitroStatus: await client.getNitroStatus(userId),
+        nitroSince: nitroSince
+    };
     res.render('layout.ejs', {
+        ...userData,
         pageTitle: `Discord User Wrapper - krvvko`,
         body: `index`
     });
@@ -28,11 +49,10 @@ app.get('/', (req, res) => {
 
 app.get('/user', async (req, res) => {
     const userId = req.query['uid'];
-
     if (!userId) {
         res.render('layout.ejs', {
             commonGuilds: null,
-            pageTitle: `DWP - User ID not found`,
+            pageTitle: `DUW - User ID not found`,
             body: `user`
         });
         return;
@@ -59,14 +79,14 @@ app.get('/user', async (req, res) => {
 
         res.render('layout.ejs', {
             ...userData,
-            pageTitle: `DWP - User ${userId}`,
+            pageTitle: `DUW - User ${userId}`,
             body: `user`
         });
     } catch (err) {
         console.error(err);
         res.render('layout.ejs', {
             commonGuilds: null,
-            pageTitle: `DWP - Error ${err}`,
+            pageTitle: `DUW - Error ${err}`,
             body: `user`
         });
     }

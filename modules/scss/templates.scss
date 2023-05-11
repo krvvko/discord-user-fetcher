@@ -108,3 +108,32 @@ input[type=number] {
   75% { transform: translate(-5px, 5px) rotate(-5deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
 }
+
+@keyframes msg1 {
+  0%,100% {
+    box-shadow: 0 0 9px 4px $accent-4-t;
+    transform: scale(1) rotate(-25deg) translate(-55px, -55px);
+  }
+  33% {
+    box-shadow: 0 0 12px 5px $accent-4-t;
+    transform: scale(1.03) rotate(-24deg) translate(-56px, -53px);
+  }
+  66% {
+    box-shadow: 0 0 7px 3px $accent-4-t;
+    transform: scale(0.97) rotate(-27deg) translate(-54px, -58px);
+  }
+}
+@keyframes msg2 {
+  0%,100% {
+    box-shadow: 0 0 9px 4px $accent-4-t;
+    transform: scale(1) rotate(22deg) translate(55px, 15px);
+  }
+  33% {
+    box-shadow: 0 0 7px 3px $accent-4-t;
+    transform: scale(0.97) rotate(23deg) translate(56px, 14px);
+  }
+  66% {
+    box-shadow: 0 0 12px 5px $accent-4-t;
+    transform: scale(1.03) rotate(20deg) translate(53px, 17px);
+  }
+}

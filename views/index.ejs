@@ -1,5 +1,5 @@
-<div class="section-ui-anim-bg">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 120%; height: 100%; resize: none;margin:auto;background:rgba(255, 255, 255, 0);display:block;z-index:1;position:relative" width="2402" height="1169" preserveAspectRatio="xMidYMid" viewBox="0 0 2402 1169">
+<div id="tryInAction" class="section-ui-anim-bg">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 120%; height: 100%; resize: none;margin:auto;background:rgba(255, 255, 255, 0);display:block;z-index:1;position:relative" width="2402" height="1169" preserveAspectRatio="none" viewBox="0 0 2402 1169">
         <g transform="translate(1201,584.5) scale(1,1) translate(-1201,-584.5)"><defs>
                 <linearGradient id="ldbk-photon-205zwjvebfx-lg" x1="1392.1799999999998" x2="2402" y1="0" y2="0" gradientUnits="userSpaceOnUse">
                     <stop stop-color="#2B2F3DFF" offset="0"></stop>
@@ -219,7 +219,7 @@
                 </div>
                 <div class="ui-logo">
                     <a class="ui-nav-element-active" href="">
-                        <img src="https://webfetcher.krvvko.me/media/logo.png" alt="webFetcher">
+                        <img src="public/media/logo.png" alt="webFetcher">
                     </a>
                 </div>
                 <nav>
@@ -227,10 +227,7 @@
                         <img src="https://webfetcher.krvvko.me/media/logo.png" alt="webFetcher">
                     </a>
                     <a class="ui-nav-element" href="">
-                        <img src="https://webfetcher.krvvko.me/media/logo.png" alt="webFetcher">
-                    </a>
-                    <a class="ui-nav-element" href="">
-                        <img src="https://webfetcher.krvvko.me/media/logo.png" alt="webFetcher">
+                        <img style="height: 80%; width: 80%" src="https://mini.krvvko.me/img/favicon.ico" alt="webFetcher">
                     </a>
                 </nav>
             </div>
@@ -239,7 +236,83 @@
                     Discord member fetcher
                 </div>
                 <div class="ui-discord-right-content">
-                    asd
+                    <div class="ui-discord-tags">
+                        <div class="ui-tags-top">
+                            <span>Available data:</span>
+                        </div>
+                        <div class="ui-tags-list">
+                            <span>Stable API</span>
+                            <ul>
+                                <li>Server list</li>
+                                <li>Server username</li>
+                                <li>PFP</li>
+                                <li>Creation date</li>
+                                <li>Username + #</li>
+                                <li>Is user bot</li>
+                            </ul>
+                        </div>
+                        <div class="ui-tags-list">
+                            <span>Unstable API</span>
+                            <ul>
+                                <li>About Me</li>
+                                <li>Nitro</li>
+                                <li>Badges</li>
+                                <li>Banner</li>
+                                <li>Theme colors</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ui-discord-inside-element-wrapper">
+                        <div class="ui-discord-custom-border" style="--color1: <%= accentColor[0] %>; --color2: <%= accentColor[1] %>;">
+                            <div class="ui-discord-inside-element">
+                                <div class="udie-top" style="--bg: <%= bannerUrl ? "url('" + bannerUrl + "')" : "linear-gradient("+accentColor+")"%>; <%= bannerUrl ? "" : "min-height: 60px; max-height: 60px"%>">
+                                    <img class="udie-pfp" src="<%= avatarUrl %>" alt="Avatar" style="max-width: 200px; <%= bannerUrl ? "" : "margin-bottom: 12px;"%>"><br>
+                                </div>
+                                    <% if (badges && badges.length > 0) { %>
+                                    <div class="udie-badges">
+                                    <% badges.forEach(function(badge) { %>
+                                            <img class="udie-badge" src="<%= badge.iconURL() %>" alt="<%= badge.description %>">
+                                        <% }) %>
+                                    </div>
+                                    <% } else { %>
+                                        <div style="height: 30px;"></div>
+                                    <% } %>
+                                <div class="udie-info">
+                                    <h1 class="udie-username"><%= username %></h1>
+                                    <div class="udie-block">
+                                        <span>ABOUT ME</span>
+                                        <span id="aboutMe">...</span>
+                                    </div>
+                                    <div class="udie-block">
+                                        <span>DISCORD MEMBER SINCE</span>
+                                        <span><%= creationDate %></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-msgs">
+                <div class="ui-msg">
+                    <img src="https://cdn.discordapp.com/avatars/695768168450359346/c9193ddee177babfbd84a1e192aab749.png?size=2048" class="ui-msg-left">
+                    <div class="ui-msg-right">
+                        <div class="ui-msg-top">
+                            <span>My catgirl</span>
+                            <span>Today at 9:24 AM</span>
+                        </div>
+                        <span class="ui-msg-bottom">Meow meow meow meow</span>
+                    </div>
+                </div>
+                <div class="ui-msg">
+                    <img src="https://cdn.discordapp.com/avatars/247032967220822037/1e99e1611b29fa114ff7d924880c150a.png?size=2048" class="ui-msg-left">
+                    <div class="ui-msg-right">
+                        <div class="ui-msg-top">
+                            <span>krvvko</span>
+                            <span>Today at 8:31 AM</span>
+                        </div>
+                        <span class="ui-msg-bottom">Used to fetch user data, wanna get someone's public servers?</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -250,14 +323,89 @@
                 Please note that self bots are not supported by discord, so some user information may not be available and will not be displayed <br>
                 <a target="_blank" href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-">How to find the user ID</a></span>
             <form class="uid-input-container animate__animated animate__fadeInUp animate__delay-1s" action="/user" method="GET">
-                <input placeholder="Enter user id" type="number" required id="uid" name="uid" class="user-id-input">
+                <input minlength="18" placeholder="Enter user id" type="number" required id="uid" name="uid" class="user-id-input">
                 <button class="submit-btn" type="submit">Search user</button>
             </form>
         </div>
 
     </div>
     <div class="intro-bottom">
+        <svg preserveAspectRatio="none" width="304" height="124" viewBox="0 0 304 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1_11)">
+                <path d="M78 42.5746C19 32.5746 18 37.5746 -69 71.5746V134.575L78 140.575L386 149.575V50.5746C350 47.908 266.8 45.5746 222 57.5746C166 72.5746 137 52.5746 78 42.5746Z" fill="currentColor" fill-opacity="0.6"/>
+                <path d="M137 38.5746C78 28.5746 77 33.5746 -10 67.5746V130.575L137 136.575L445 145.575V46.5746C409 43.908 325.8 41.5746 281 53.5746C225 68.5746 196 48.5746 137 38.5746Z" fill="currentColor" fill-opacity="0.6"/>
+                <path d="M1 38.5746C-58 28.5746 -59 33.5746 -146 67.5746V130.575L1 136.575L309 145.575V46.5746C273 43.908 189.8 41.5746 145 53.5746C89 68.5746 60 48.5746 1 38.5746Z" fill="currentColor" fill-opacity="0.6"/>
+                <path d="M50.284 58.8698C-9.52427 56.8786 -9.84418 61.9676 -91.494 107.336L-83.0388 169.766L63.4366 155.983L369.858 123.565L356.571 25.4609C320.539 27.6499 237.779 36.5039 194.994 54.4079C141.514 76.7879 110.092 60.8609 50.284 58.8698Z" fill="currentColor" fill-opacity="0.6"/>
+            </g>
+            <defs>
+                <clipPath id="clip0_1_11">
+                    <rect width="304" height="124" fill="white"/>
+                </clipPath>
+            </defs>
+        </svg>
 
+    </div>
+</section>
+<section class="section-explanation">
+    <div class="home-section-container">
+        <div class="section-text">
+            <h1 class="section-headline">Secret Account</h1>
+            <span class="section-description">
+                Using a secret account (its username is on your right) and js library
+                <a target="_blank" href="">discord.js-selfbot-v13</a>
+                the script makes a request to the discord api, and returns the necessary information about the guilds and the user.
+                Are discord selfbots against their TOS? uhhhhhh... maybe..... so, I wouldn't recommend to use it
+            </span>
+            <a href="#tryInAction" class="submit-btn">Try it yourself</a>
+        </div>
+        <div style="height: unset; min-width: 294px; max-width: 294px" class="section-ui animate__animated animate__fadeInUp">
+            <div class="shadow ui-discord-inside-element" style="border: 2px solid #1e2124">
+                <div class="udie-top" style="min-height: 80px; max-height: 80px; background: #707f8e;">
+                    <img class="udie-pfp" src="https://archive.org/download/discordprofilepictures//discordgrey_thumb.jpg" alt="Avatar" style="max-width: 200px; <%= bannerUrl ? "" : "margin-bottom: 12px;"%>"><br>
+                </div>
+                <div style="height: 30px"></div>
+                <div class="udie-info">
+                    <h1 class="udie-username">acc_identifier#0991</h1>
+                    <div class="udie-block">
+                        <span>DISCORD MEMBER SINCE</span>
+                        <span>Jan 19, 2023</span>
+                    </div>
+                    <div class="udie-block">
+                        <span>PLAYING A GAME</span>
+                        <div class="discord-ui-game">
+                            <div>
+                                <img src="https://media.discordapp.net/attachments/1086422556258615406/1105135324251828304/b9f696010b6d410e936cd59f75e23507.png" alt="">
+                                <div>
+                                    <span>Discord Member Fetcher</span>
+                                    <span>Fetching user data</span>
+                                    <span>Server is up for:</span>
+                                    <span id="home-discord-ui-elapsed"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <button>Official Website</button>
+                                <button>GitHub</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-section-container">
+        <img class="section-img shadow" src="public/media/servers.png" alt="">
+        <div class="section-text">
+            <h1 class="section-headline">Server search</h1>
+            <span class="section-description">
+                Unfortunately, after requesting the discord API - it does not return a list of guilds the user
+                is a member of, but it does return a list of shared servers with the client. So the client account
+                is a member of a huge amount of guilds, which makes this search reasonable and possible
+            </span>
+        </div>
+    </div>
+    <div class="shadow section-footer">
+        <h1 class="section-headline2">Stop reading, just fetch somebody :)</h1>
+        <a href="#tryInAction" class="submit-btn">Try it yourself</a>
     </div>
 </section>
 

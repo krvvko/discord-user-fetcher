@@ -6,6 +6,7 @@
 html {
   font-family: $def-font;
   color: $headline-color-white;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -123,7 +124,7 @@ main {
   height: calc(100vh - 109px);
 }
 .section-ui-anim-bg {
-  height: 800px;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -143,9 +144,6 @@ main {
   width: 80vw;
   align-items: center;
   justify-content: center;
-  > * {
-    flex: 50%;
-  }
 }
 
 .ui-msgs {
@@ -469,7 +467,7 @@ main {
   border-radius: $border-radius;
 }
 .udie-top {
-  background: var(--bg);
+  background: var(--bg) 100%;
   background-size: cover;
   min-height: 90px;
   max-height: 90px;
@@ -568,11 +566,10 @@ main {
   background: $discord-ui-accent3;
   height: 100%;
   width: 154px;
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   box-sizing: border-box;
 }
 .ui-tags-top {
-  margin-bottom: 10px;
   font-weight: bold;
 }
 .ui-discord-inside-element-wrapper {
@@ -584,19 +581,21 @@ main {
 }
 .ui-tags-list {
   padding-top: 15px;
+  margin-top: 15px;
   border-top: 2px solid $discord-ui-accent2;
   span {
     display: block;
     margin-bottom: 4px;
   }
   ul {
-    color: $text-color-2;
+    color: $text-color-3;
     font-size: 14px;
     margin-top: 0;
-    padding-left: 15px;
+    padding-left: 20px;
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
   }
 }
 
@@ -665,6 +664,7 @@ main {
 .section-img {
   max-width: 50%;
   border-radius: $border-radius;
+  border: 2px solid $discord-ui-accent4;
 }
 .section-headline2 {
   text-align: center;
@@ -674,10 +674,9 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: $accent-1;
   align-self: center;
   padding: 0 30px 20px 30px;
   border-radius: $border-radius;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
 }
 @import "adaptive.scss";

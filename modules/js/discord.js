@@ -4,6 +4,7 @@ const config = require('../../config.json');
 class DiscordClient {
     constructor() {
         this.client = new Discord.Client({
+            syncStatus: false,
             checkUpdate: false
         });
         this.token = config.discordToken;
@@ -14,17 +15,17 @@ class DiscordClient {
             this.client.on('ready', async () => {
                 console.log(`Logged in as ${this.client.user.tag}`);
                 // Set the status to online
-                await this.client.user.setStatus('online');
                 let r = new Discord.RichPresence()
                     .setApplicationId('817229550684471297')
-                    .setType('PLAYING')
+                    .setURL('https://youtube.com/watch?v=MqsrmhNmN3k')
+                    .setType('STREAMING')
                     .setState('Server is up for:')
                     .setName('Discord Member Fetcher')
                     .setDetails('Fetching user data')
                     .setStartTimestamp(Date.now())
                     .setAssetsLargeImage('mp:attachments/1086422556258615406/1105135324251828304/b9f696010b6d410e936cd59f75e23507.png')
                     .setAssetsLargeText('Fetching...')
-                    .addButton('Official WebSite', 'https://github.com/krvvko/discord-user-fetcher')
+                    .addButton('Official WebSite', 'https://discord.krvvko.me/')
                     .addButton('GitHub', 'https://github.com/krvvko/discord-user-fetcher')
                 this.client.user.setActivity(r);
 
@@ -46,9 +47,20 @@ class DiscordClient {
         });
     }
 
+    async fetchUser(userId) {
+        let targetUser = await this.client.users.fetch(userId);
+        if (!targetUser) {
+            return null;
+        }
+        if (targetUser.partial) {
+            targetUser = await targetUser.fetch();
+        }
+        return targetUser;
+    }
+
     async getAccountCreationDate(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -62,7 +74,7 @@ class DiscordClient {
 
     async getUsername(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -75,7 +87,7 @@ class DiscordClient {
 
     async getAboutMe(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -89,7 +101,7 @@ class DiscordClient {
 
     async getUserAvatar(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -102,7 +114,7 @@ class DiscordClient {
     }
     async isUserBot(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -146,7 +158,7 @@ class DiscordClient {
 
     async getUserBanner(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -166,7 +178,7 @@ class DiscordClient {
 
     async getUserAccentColor(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -180,7 +192,7 @@ class DiscordClient {
 
     async getUserBadges(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -195,7 +207,7 @@ class DiscordClient {
 
     async getNitroStatus(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
@@ -208,7 +220,7 @@ class DiscordClient {
 
     async getNitroSince(userId) {
         try {
-            const targetUser = await this.client.users.fetch(userId);
+            const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }

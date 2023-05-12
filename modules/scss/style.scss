@@ -25,11 +25,11 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: -1px;
+  position: fixed;
   padding: $step*18px $step*12px;
   transition: 0.2s;
   box-sizing: border-box;
+  width: 100%;
   z-index: 2;
   .h-right {
     display: flex;
@@ -120,8 +120,10 @@ main {
   justify-content: center;
   align-items: center;
   position: relative;
+  padding-top: 109px;
+  box-sizing: border-box;
   flex-direction: column;
-  height: calc(100vh - 109px);
+  height: 100vh;
 }
 .section-ui-anim-bg {
   height: 100vh;
@@ -130,11 +132,13 @@ main {
   z-index: -1;
   position: absolute;
   pointer-events: none;
-  margin-top: -109px;
   svg {
     height: 100%;
     width: 100%;
   }
+}
+.section-ui-anim-bg-mobile {
+  display: none;
 }
 .intro-top {
   display: flex;

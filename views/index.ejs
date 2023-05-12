@@ -223,10 +223,10 @@
                     </a>
                 </div>
                 <nav>
-                    <a class="ui-nav-element" href="">
+                    <a class="ui-nav-element" target="_blank" href="https://webfetcher.krvvko.me/">
                         <img src="https://webfetcher.krvvko.me/media/logo.png" alt="webFetcher">
                     </a>
-                    <a class="ui-nav-element" href="">
+                    <a class="ui-nav-element" target="_blank" href="https://mini.krvvko.me/">
                         <img style="height: 80%; width: 80%" src="https://mini.krvvko.me/img/favicon.ico" alt="webFetcher">
                     </a>
                 </nav>
@@ -318,11 +318,11 @@
         </div>
 
         <div class="intro-text">
-            <h1 class="section-headline animate__animated animate__fadeInUp">Discord Member Fetcher</h1>
-            <span class="section-description animate__animated animate__fadeIn">To view the public data of a discord user - enter his id below.
+            <h1 class="section-headline animate__animated animate__fadeInUp animate__delay-1s">Discord Member Fetcher</h1>
+            <span class="section-description animate__animated animate__fadeIn animate__delay-2s">To view the public data of a discord user - enter his id below.
                 Please note that self bots are not supported by discord, so some user information may not be available and will not be displayed <br>
                 <a target="_blank" href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-">How to find the user ID</a></span>
-            <form class="uid-input-container animate__animated animate__fadeInUp animate__delay-1s" action="/user" method="GET">
+            <form class="uid-input-container animate__animated animate__fadeInUp animate__delay-3s" action="/user" method="GET">
                 <input minlength="18" placeholder="Enter user id" type="number" required id="uid" name="uid" class="user-id-input">
                 <button class="submit-btn" type="submit">Search user</button>
             </form>
@@ -343,7 +343,6 @@
                 </clipPath>
             </defs>
         </svg>
-
     </div>
 </section>
 <section class="section-explanation">
@@ -352,13 +351,13 @@
             <h1 class="section-headline">Secret Account</h1>
             <span class="section-description">
                 Using a secret account (its username is on your right) and js library
-                <a target="_blank" href="">discord.js-selfbot-v13</a>
+                <a target="_blank" href="https://discordjs-self-v13.netlify.app/#/">discord.js-selfbot-v13</a>
                 the script makes a request to the discord api, and returns the necessary information about the guilds and the user.
                 Are discord selfbots against their TOS? uhhhhhh... maybe..... so, I wouldn't recommend to use it
             </span>
             <a href="#tryInAction" class="submit-btn">Try it yourself</a>
         </div>
-        <div style="height: unset; min-width: 294px; max-width: 294px" class="section-ui animate__animated animate__fadeInUp">
+        <div style="height: unset; min-width: 294px; max-width: 294px" class="section-ui">
             <div class="shadow ui-discord-inside-element" style="border: 2px solid #1e2124">
                 <div class="udie-top" style="min-height: 80px; max-height: 80px; background: #707f8e;">
                     <img class="udie-pfp" src="https://archive.org/download/discordprofilepictures//discordgrey_thumb.jpg" alt="Avatar" style="max-width: 200px; <%= bannerUrl ? "" : "margin-bottom: 12px;"%>"><br>
@@ -398,12 +397,12 @@
             <h1 class="section-headline">Server search</h1>
             <span class="section-description">
                 Unfortunately, after requesting the discord API - it does not return a list of guilds the user
-                is a member of, but it does return a list of shared servers with the client. So the client account
+                is a member of, but it does return a list of mutual servers with the client. So the client account
                 is a member of a huge amount of guilds, which makes this search reasonable and possible
             </span>
         </div>
     </div>
-    <div class="shadow section-footer">
+    <div class="section-footer">
         <h1 class="section-headline2">Stop reading, just fetch somebody :)</h1>
         <a href="#tryInAction" class="submit-btn">Try it yourself</a>
     </div>

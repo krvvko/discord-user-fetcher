@@ -2,12 +2,34 @@
 const stickyElm = document.querySelector('header')
 
 window.onscroll = function() {
-    if (window.scrollY === 0) {
+    if (window.scrollY <= 0) {
         stickyElm.classList.remove("isSticky");
     } else {
         stickyElm.classList.add("isSticky");
     }
 };
+
+function submitUser() {
+    let btn = document.getElementById('user-submit-loading');
+    btn.classList.add('user-submit-loading-active');
+    btn.innerText = 'Getting data';
+    btn.disabled = true;
+}
+
+function showUserSection(section) {
+    for (let sectionContainer of document.querySelectorAll('.user-ui-discord-element')) {
+        if (sectionContainer.style.display !== 'none') {
+            sectionContainer.style.display = 'none';
+        }
+    }
+    for (let btn of document.querySelectorAll('.user-section-btn')) {
+        if (btn.classList.contains('active')) {
+            btn.classList.remove('active');
+        }
+    }
+    document.getElementById('user-section-btn-'+section).classList.add('active');
+    document.getElementById('user-ui-discord-'+section).style.display = 'flex';
+}
 
 // const uiElapsedElement = document.getElementById('home-discord-ui-elapsed');
 // let seconds = 0;

@@ -391,7 +391,7 @@
                                         <div style="height: 30px;"></div>
                                     <% } %>
                                 <div class="udie-info">
-                                    <h1 class="udie-username"><%= username %></h1>
+                                    <h1 class="udie-username"><%- username %></h1>
                                     <div class="udie-block">
                                         <span>ABOUT ME</span>
                                         <span id="aboutMe">...</span>
@@ -435,9 +435,10 @@
             <span class="section-description animate__animated animate__fadeIn animate__delay-2s">To view the public data of a discord user - enter his id below.
                 Please note that self bots are not supported by discord, so some user information may not be available and will not be displayed <br>
                 <a target="_blank" href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-">How to find the user ID</a></span>
-            <form class="uid-input-container animate__animated animate__fadeInUp animate__delay-3s" action="/user" method="GET">
+            <form class="uid-input-container animate__animated animate__fadeInUp animate__delay-3s" onsubmit="submitUser()" action="/user" method="GET">
+
                 <input minlength="18" placeholder="Enter user id" type="number" required id="uid" name="uid" class="user-id-input">
-                <button class="submit-btn" type="submit">Search user</button>
+                <button class="submit-btn" type="submit" id="user-submit-loading">Search user</button>
             </form>
         </div>
 
@@ -458,7 +459,7 @@
         </svg>
     </div>
 </section>
-<section class="section-explanation">
+<section id="about" class="section-explanation">
     <div class="home-section-container">
         <div class="section-text">
             <h1 class="section-headline">Secret Account</h1>
@@ -490,11 +491,10 @@
                                 <div>
                                     <span>Discord Member Fetcher</span>
                                     <span>Fetching user data</span>
-                                    <span>Server is up for:</span>
-                                    <span id="home-discord-ui-elapsed"></span>
                                 </div>
                             </div>
                             <div>
+                                <button>Watch</button>
                                 <button>Official Website</button>
                                 <button>GitHub</button>
                             </div>

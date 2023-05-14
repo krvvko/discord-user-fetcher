@@ -7,6 +7,7 @@ class DiscordClient {
             syncStatus: false,
             checkUpdate: false
         });
+        this.userCache = new Map();
         this.token = config.discordToken;
     }
 
@@ -48,16 +49,23 @@ class DiscordClient {
     }
 
     async fetchUser(userId) {
-        let targetUser = await this.client.users.fetch(userId);
-        if (!targetUser) {
+        if (this.userCache.has(userId)) {
+            return this.userCache.get(userId);
+        }
+
+        try {
+            let targetUser = await this.client.users.fetch(userId, {force: true});
+
+            if (targetUser.partial) {
+                targetUser = await targetUser.fetch();
+            }
+            this.userCache.set(userId, targetUser);
+            return targetUser;
+        } catch (err) {
+            console.error(`Error fetching user ${userId}: ${err}`);
             return null;
         }
-        if (targetUser.partial) {
-            targetUser = await targetUser.fetch();
-        }
-        return targetUser;
     }
-
     async getAccountCreationDate(userId) {
         try {
             const targetUser = await this.fetchUser(userId);
@@ -78,7 +86,7 @@ class DiscordClient {
             if (!targetUser) {
                 return null;
             }
-            return `${targetUser.username}#${targetUser.discriminator}`;
+            return `${targetUser.username}<span class="discriminator">#${targetUser.discriminator}</span>`;
         } catch (err) {
             console.error(err);
             return null;
@@ -105,7 +113,6 @@ class DiscordClient {
             if (!targetUser) {
                 return null;
             }
-
             return targetUser.displayAvatarURL({format: 'png', dynamic: true, size: 2048});
         } catch (err) {
             console.error(err);
@@ -118,7 +125,6 @@ class DiscordClient {
             if (!targetUser) {
                 return null;
             }
-
             return targetUser.bot;
         } catch (err) {
             console.error(err);
@@ -128,7 +134,7 @@ class DiscordClient {
 
     async findCommonGuilds(targetUserId) {
         try {
-            const targetUser = await this.client.users.fetch(targetUserId);
+            const targetUser = await this.fetchUser(targetUserId);
             if (!targetUser) {
                 return null;
             }
@@ -141,7 +147,8 @@ class DiscordClient {
                         const member = await guild.members.fetch(targetUserId).catch(() => null);
                         if (member) {
                             const nickname = member.nickname || targetUser.username;
-                            mutualGuildNamesAndNicknames.push({guildName: guild.name, nickname: nickname});
+                            let iconUrl = guild.iconURL({ format: 'png', dynamic: true, size: 2048 });
+                            mutualGuildNamesAndNicknames.push({guildName: guild.name, nickname: nickname, icon: iconUrl});
                         }
                     } catch (err) {
                         console.error(err);
@@ -166,7 +173,6 @@ class DiscordClient {
                 return null;
             }
             const extension = targetUser.banner.startsWith('a_') ? 'gif' : 'png';
-
             return `https://cdn.discordapp.com/banners/${userId}/${targetUser.banner}.${extension}?size=1024`
         } catch (err) {
             console.error(err);
@@ -174,15 +180,12 @@ class DiscordClient {
         }
     }
 
-
-
     async getUserAccentColor(userId) {
         try {
             const targetUser = await this.fetchUser(userId);
             if (!targetUser) {
                 return null;
             }
-            console.log(targetUser)
             return targetUser.hexThemeColor;
         } catch (err) {
             console.error(err);
@@ -221,10 +224,12 @@ class DiscordClient {
     async getNitroSince(userId) {
         try {
             const targetUser = await this.fetchUser(userId);
-            if (!targetUser) {
+            if (!targetUser || !targetUser.premiumSince) {
                 return null;
             }
-            return targetUser.premiumSince;
+            let date = new Date(targetUser.premiumSince);
+            let formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            return formattedDate;
         } catch (err) {
             console.error(err);
             return null;

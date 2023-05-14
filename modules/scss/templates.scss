@@ -35,7 +35,7 @@
   background: none;
   border: none;
   outline: none;
-  transition: background 0.2s;
+  transition: background 0.2s, width 0.2s;
   font-family: $def-font;
   font-weight: bold;
 }

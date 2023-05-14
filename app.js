@@ -1,8 +1,12 @@
 const express = require('express');
 const path = require('path');
-const DiscordClient = require('./modules/js/discord.js');
 const app = express();
+const config = require('./config.json');
+const DiscordClient = require('./modules/js/discord.js');
 const client = new DiscordClient();
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database('./db/usersRequests.sqlite');
+
 
 (async () => {
     await client.login();
@@ -12,7 +16,6 @@ const client = new DiscordClient();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view options', { delimiter: '%'});
-
 app.use('/public', express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, path, stat) => {
         res.set('Content-Type', 'text/css');
@@ -28,9 +31,6 @@ app.get('/', async (req, res) => {
         "269415732973010945"
     ]
     const userId = userList[Math.random() * userList.length | 0];
-    console.log(userId)
-    const nitroSinceTimestamp = await client.getNitroSince(userId);
-    const nitroSince = nitroSinceTimestamp ? new Date(nitroSinceTimestamp).toLocaleDateString() : null;
     const userData = {
         username: await client.getUsername(userId),
         creationDate: await client.getAccountCreationDate(userId),
@@ -40,7 +40,7 @@ app.get('/', async (req, res) => {
         bannerUrl: await client.getUserBanner(userId),
         badges: await client.getUserBadges(userId),
         nitroStatus: await client.getNitroStatus(userId),
-        nitroSince: nitroSince
+        nitroSince: await client.getNitroSince(userId) ? await client.getNitroSince(userId) : null
     };
     res.render('layout.ejs', {
         ...userData,
@@ -61,9 +61,6 @@ app.get('/user', async (req, res) => {
     }
 
     try {
-        const nitroSinceTimestamp = await client.getNitroSince(userId);
-        const nitroSince = nitroSinceTimestamp ? new Date(nitroSinceTimestamp).toLocaleDateString() : null;
-
         const userData = {
             commonGuilds: await client.findCommonGuilds(userId),
             userId: userId,
@@ -71,13 +68,21 @@ app.get('/user', async (req, res) => {
             creationDate: await client.getAccountCreationDate(userId),
             aboutMe: await client.getAboutMe(userId),
             avatarUrl: await client.getUserAvatar(userId),
-            accentColor: await client.getUserAccentColor(userId),
+            accentColor: await client.getUserAccentColor(userId) ? await client.getUserAccentColor(userId) : ["#1e2124", "#1e2124"],
             bannerUrl: await client.getUserBanner(userId),
             badges: await client.getUserBadges(userId),
             isUserBot: await client.isUserBot(userId),
             nitroStatus: await client.getNitroStatus(userId),
-            nitroSince: nitroSince
+            nitroSince: await client.getNitroSince(userId) ? await client.getNitroSince(userId) : null
         };
+
+        let requestDate = new Date().toISOString();
+        db.run(`INSERT INTO users(userID, requestDate) VALUES(?, ?)`, [userId, requestDate], function(err) {
+            if (err) {
+                return console.log(err.message);
+            }
+        });
+
 
         res.render('layout.ejs', {
             ...userData,
@@ -93,6 +98,6 @@ app.get('/user', async (req, res) => {
         });
     }
 });
-app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000}');
+app.listen(config.port, () => {
+    console.log(`Server started on http://localhost:${config.port}`);
 });

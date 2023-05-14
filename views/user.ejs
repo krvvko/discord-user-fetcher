@@ -1,41 +1,125 @@
-<h2>User Information:</h2>
-<img src="<%= avatarUrl %>" alt="Avatar" style="max-width: 200px;"><br>
-<img src="<%= bannerUrl %>" alt="Banner" style="max-width: 2048px;"><br>
+<div class="user-ui-discord-outer" style="--user-ui-color1: <%= accentColor[0] %>; --user-ui-color2: <%= accentColor[1] %>">
+    <div class="user-ui-discord">
+        <div class="user-ui-discord-top">
+            <img src="<%= bannerUrl ? bannerUrl : '/public/media/user_bg.png' %>" class="user-ui-discord-banner" alt="">
+            <img src="<%= avatarUrl %>" class="user-ui-discord-pfp" alt="">
+        </div>
+        <div class="user-ui-discord-under" style="<%= badges && badges.length > 0 ? '' : 'justify-content: flex-end;' %>">
+            <% if (badges && badges.length > 0) { %>
+                <div class="user-ui-discord-badges">
+                    <% badges.forEach(function(badge) { %>
+                        <img src="<%= badge.iconURL() %>" alt="<%= badge.description %>">
+                    <% }) %>
+                </div>
+            <% } %>
+                <a href="https://discordapp.com/users/<%= userId%>"
+                    <% if (!(accentColor[0] === `#1e2124` && accentColor[0] === `#1e2124`)) { %>
+                        style="--color1: <%= accentColor[0]%>; --color2: <%= accentColor[1]%>"
+                    <% } else { %>
+                        style="--color1: #158a15; --color2: #158a15;"
+                    <% } %>
+                   class="open-profile-link" id="open-profile-btn">Open profile</a>
+        </div>
+        <div class="user-ui-discord-content-main">
+            <span class="user-ui-discord-username">
+                <%- username %>
+                <% if (isUserBot) { %>
+                    <span class="isBot">BOT</span>
+                <% } %>
+            </span>
+            <div class="user-ui-discord-buttons">
+                <button id="user-section-btn-user-info" onclick="showUserSection('user-info')" class="user-section-btn active">User Info</button>
+                <button id="user-section-btn-public-servers" onclick="showUserSection('public-servers')" class="user-section-btn">Public Servers</button>
+                <button id="user-section-btn-connections" onclick="showUserSection('connections')" class="user-section-btn">Connections</button>
+                <button id="user-section-btn-dufdata" onclick="showUserSection('dufdata')" class="user-section-btn">DUF Data</button>
+            </div>
+            <div class="user-ui-discord-content">
+                <div class="user-ui-discord-element" id="user-ui-discord-user-info">
+                    <div class="user-ui-discord-content-element">
+                        <span>USER BIO</span>
+                        <span><%= aboutMe %></span>
+                    </div>
+                    <div class="user-ui-discord-content-element">
+                        <span>MEMBER SINCE</span>
+                        <span><%= creationDate %></span>
+                    </div>
+                    <% if (!(accentColor[0] === `#1e2124` && accentColor[0] === `#1e2124`)) { %>
+                        <div class="user-ui-discord-content-element">
+                            <span>PROFILE COLORS</span>
+                            <div class="user-ui-discord-colors">
+                                <div class="color">
+                                    <div style="--user-ui-color-1: <%= accentColor[0] %>"></div>
+                                    <span><%= accentColor[0] %></span>
+                                </div>
+                                <div class="color">
+                                    <div style="--user-ui-color-1: <%= accentColor[1] %>"></div>
+                                    <span><%= accentColor[1] %></span>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                    <div class="user-ui-discord-content-element">
+                        <span>NITRO STATUS</span>
+                        <span><%= nitroStatus %></span>
+                    </div>
+                    <% if (nitroStatus !== 'NONE') { %>
+                        <div class="user-ui-discord-content-element">
+                            <span>NITRO MEMBER SINCE</span>
+                            <span><%= nitroSince %></span>
+                        </div>
+                    <% } %>
+                    <div class="user-ui-discord-content-element">
+                        <span>USER ID</span>
+                        <span><%= userId %></span>
+                    </div>
+                </div>
+                <div style="display: none" class="user-ui-discord-element" id="user-ui-discord-public-servers">
+                    <% if (commonGuilds !== -1) { %>
+                        <div class="user-ui-discord-server-container">
+                            <% commonGuilds.forEach((guild) => { %>
+                                <div class="user-ui-discord-server">
+                                    <img class="user-ui-discord-server-icon" src="<%= guild.icon %>" alt="<%= guild.guildName %>">
+                                    <div class="user-ui-discord-server-right">
+                                        <span><%= guild.guildName %></span>
+                                        <span><%= guild.nickname %></span>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } else { %>
+                        <p>No public servers found.</p>
+                    <% } %>
+                </div>
+                <div style="display: none" class="user-ui-discord-element" id="user-ui-discord-connections">connections</div>
+                <div style="display: none" class="user-ui-discord-element" id="user-ui-discord-dufdata">duf data</div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<% if (!(accentColor[0] === `#1e2124` && accentColor[0] === `#1e2124`)) { %>
+<script>
+    function getBrightness(color) {
+        let rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+        let r = parseInt(rgb[1], 16);
+        let g = parseInt(rgb[2], 16);
+        let b = parseInt(rgb[3], 16);
+        return (r * 299 + g * 587 + b * 114) / 1000;
+    }
 
-<strong>Username:</strong> <%= username %> <br>
-<strong>Account Creation Date:</strong> <%= creationDate %> <br>
-<strong>Bot:</strong> <%= isUserBot ? 'Yes' : 'No' %>
-<p>About Me: <%= aboutMe %></p>
-<p>Accent Colors: <%= accentColor %></p>
+    function getTextColor(color1, color2) {
+        let brightness1 = getBrightness(color1);
+        let brightness2 = getBrightness(color2);
+        let middleBrightness = (brightness1 + brightness2) / 2;
+        return middleBrightness < 128 ? 'white' : 'black';  // the value 128 is the middle of the brightness range (0-255)
+    }
 
-<h2>Badges:</h2>
-<ul>
-    <% if (badges) { %>
-        <% badges.forEach(function(badge) { %>
-            <li>
-                <img src="<%= badge.iconURL() %>" alt="<%= badge.description %>">
-                <%= badge.description %>
-            </li>
-        <% }) %>
-    <% } else { %>
-        <li>No badges found.</li>
-    <% } %>
-</ul>
+    let color1 = "<%= accentColor[0] %>";
+    let color2 = "<%= accentColor[1] %>";
 
+    let textColor = getTextColor(color1, color2);
 
-<p>Nitro status: <%= nitroStatus %></p>
-<p>Nitro since: <%= nitroSince %></p>
-
-<p>User ID: <%= userId %></p>
-
-<% if (commonGuilds !== -1) { %>
-    <h2>Common servers:</h2>
-    <ul>
-        <% commonGuilds.forEach((guild) => { %>
-            <li><%= guild.guildName %> - <%= guild.nickname %></li>
-        <% }) %>
-    </ul>
-<% } else { %>
-    <p>No common servers found.</p>
+    let button = document.getElementById("open-profile-btn");
+    button.style.color = textColor;
+</script>
 <% } %>
